@@ -25,7 +25,7 @@ app.post('/webhook', async (req, res) => {
             const messageId = resourceParts[resourceParts.length - 1];
 
             // 1. Buscar detalhes da mensagem para descobrir o pack_id e o remetente
-            const msgResponse = await axios.get(`https://api.mercadolibre.com/messages/${messageId}`, {
+            const msgResponse = await axios.get(`https://api.mercadolivre.com.br/messages/${messageId}`, {
                 headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }
             });
 
@@ -41,7 +41,7 @@ app.post('/webhook', async (req, res) => {
                 let itemId = null;
                 
                 if (packId) {
-                    const orderResponse = await axios.get(`https://api.mercadolibre.com/orders/search?pack_id=${packId}`, {
+                    const orderResponse = await axios.get(`https://api.mercadolivre.com.br/orders/search?pack_id=${packId}`, {
                         headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }
                     });
                     
@@ -58,7 +58,7 @@ app.post('/webhook', async (req, res) => {
                     const respostaTexto = `Olá! Muito obrigado pela sua compra! \n\nConforme prometido, segue abaixo o link para download dos arquivos no Dropbox, juntamente com o vídeo de passo a passo:\n\n${linkDropbox}\n\nQualquer dúvida, estamos à disposição!`;
 
                     // 4. Enviar a resposta automaticamente no chat da venda
-                    await axios.post(`https://api.mercadolibre.com/messages/packs/${packId}/sellers/${msgData.seller_id}`, {
+                    await axios.post(`https://api.mercadolivre.com.br/messages/packs/${packId}/sellers/${msgData.seller_id}`, {
                         text: respostaTexto
                     }, {
                         headers: { 
@@ -85,7 +85,7 @@ const PORT = process.env.PORT || 3000;
 // CÓDIGO TEMPORÁRIO PARA GERAR O TOKEN (Cole antes do app.listen)
 const trocarCodigoPorToken = async () => {
     try {
-        const response = await axios.post('https://api.mercadolivre.com/oauth/token', null, {
+        const response = await axios.post('https://api.mercadolivre.com.br/oauth/token', null, {
             params: {
                 grant_type: 'authorization_code',
                 client_id: '5300134713446074',

@@ -82,6 +82,25 @@ app.post('/webhook', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+// CÓDIGO TEMPORÁRIO PARA GERAR O TOKEN (Cole antes do app.listen)
+const trocarCodigoPorToken = async () => {
+    try {
+        const response = await axios.post('https://api.mercadolivre.com/oauth/token', null, {
+            params: {
+                grant_type: 'authorization_code',
+                client_id: '5300134713446074',
+                client_secret: 'y2lKi3bVj4T0rHwilnjGOYsck8uQBVrj',
+                code: 'TG-6ac889958d7b530001a809be-1316469601',
+                redirect_uri: 'https://google.com'
+            }
+        });
+        console.log("MEU ACCESS TOKEN DEFINITIVO:", response.data.access_token);
+    } catch (error) {
+        console.error("Erro ao gerar token:", error.response?.data || error.message);
+    }
+};
+trocarCodigoPorToken();
+
 app.listen(PORT, () => {
     console.log(`Bot online e escutando na porta ${PORT}`);
 });
